@@ -18,5 +18,8 @@
     "bugs": {
         "url": "https://github.com/Lord-Prinz-Team/keyBackend/issues"
     },
-    "homepage": "https://github.com/Lord-Prinz-Team/keyBackend#readme"
+    "homepage": "https://github.com/Lord-Prinz-Team/keyBackend#readme",
+    "dependencies": {
+        "dotenv": "^16.0.3"
+    }
 }
