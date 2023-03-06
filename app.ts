@@ -37,6 +37,7 @@ app.use(compression());
 app.use(json());
 
 // ROUTES
+// default route path: '/api/v1/{route}'
 
 app.use("/", (req: Request, res: Response, next: NextFunction) => {
 	res.status(200).json({
