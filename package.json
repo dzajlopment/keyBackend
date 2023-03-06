@@ -1,10 +1,12 @@
 {
     "name": "keybackend",
     "version": "1.0.0",
-    "description": "",
+    "description": "Backend for PROJECT:Key",
     "main": "server.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "ts-node server.ts",
+        "dev": "nodemon server.ts",
+        "start:prod": "NODE_ENV=production nodemon server.ts"
     },
     "repository": {
         "type": "git",
