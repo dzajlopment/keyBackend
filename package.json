@@ -24,5 +24,8 @@
         "express": "^4.18.2",
         "mongoose": "^7.0.0",
         "morgan": "^1.10.0"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.1"
     }
 }
