@@ -1,0 +1,20 @@
+{
+    "name": "keybackend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Lord-Prinz-Team/keyBackend.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Lord-Prinz-Team/keyBackend/issues"
+    },
+    "homepage": "https://github.com/Lord-Prinz-Team/keyBackend#readme"
+}
