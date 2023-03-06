@@ -5,8 +5,8 @@ import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import mongoSanitize from "express-mongo-sanitize";
 import compression from "compression";
-// import AppError from "./utils/AppError";
-// import globalErrorHandler from "./controllers/errorController";
+import AppError from "./utils/AppError";
+import globalErrorHandler from "./controllers/errorController";
 import { Response, Request, NextFunction, json } from "express";
 
 const app = express();
@@ -45,10 +45,10 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
 	next();
 });
 
-// app.all("*", (req, res, next) => {
-//     new AppError(`Can't find ${req.originalUrl} on this server!`, 404);
-// })
+app.all("*", (req, res, next) => {
+	new AppError(`Can't find ${req.originalUrl} on this server!`, 404);
+});
 
-// app.use(globalErrorHandler)
+app.use(globalErrorHandler);
 
 export default app;
