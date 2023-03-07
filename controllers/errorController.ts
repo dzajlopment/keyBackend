@@ -1,7 +1,8 @@
 import AppError from "../utils/AppError";
 import ErrorStack from "../models/errorModel";
 import type { Response, Request } from "express";
-const saveError = async (err: any) => {
+import { errorType } from "../types/runtimeTypes";
+const saveError = async (err: errorType) => {
 	const newError = await ErrorStack.create({
 		status: err.status,
 		error: err,
@@ -12,7 +13,7 @@ const saveError = async (err: any) => {
 	return newError.id;
 };
 
-const handleCastErrorDB = (err: any) => {
+const handleCastErrorDB = (err: errorType) => {
 	const message = `Invalid ${err.path}: ${err.value}.`;
 	return new AppError(message, 400);
 };
@@ -23,14 +24,14 @@ const handleDuplicateFieldsDB = (err: any) => {
 	return new AppError(message, 400);
 };
 
-const handleValidationErrorDB = (err: any) => {
-	const errors = Object.values(err.errors).map((el: any) => el.message);
+const handleValidationErrorDB = (err: errorType) => {
+	const errors = Object.values(err.errors).map((el) => el.message);
 
 	const message = `Invalid input data. ${errors.join(". ")}`;
 	return new AppError(message, 400);
 };
 
-const sendErrorDev = async (err: any, req: Request, res: Response) => {
+const sendErrorDev = async (err: errorType, req: Request, res: Response) => {
 	if (req.originalUrl.startsWith("/api")) {
 		return res.status(err.statusCode).json({
 			status: err.status,
@@ -41,7 +42,7 @@ const sendErrorDev = async (err: any, req: Request, res: Response) => {
 	}
 };
 
-const sendErrorProd = async (err: any, req: Request, res: Response) => {
+const sendErrorProd = async (err: errorType, req: Request, res: Response) => {
 	if (req.originalUrl.startsWith("/api")) {
 		if (err.isOperational) {
 			const errorId = await saveError(err);
