@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const errrorSchema = new mongoose.Schema({
+const errorSchema = new mongoose.Schema({
 	status: {
 		type: String,
 		required: [true, "Error has a status"],
@@ -18,6 +18,6 @@ const errrorSchema = new mongoose.Schema({
 	},
 });
 
-const ErrorStack = mongoose.model("ErrorStack", errrorSchema);
+const ErrorStack = mongoose.model("ErrorStack", errorSchema);
 
 export default ErrorStack;
