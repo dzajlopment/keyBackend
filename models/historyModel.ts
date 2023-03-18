@@ -43,3 +43,7 @@ historyModel.pre(/^find/, function (next) {
 
 	next();
 });
+
+const History = mongoose.model("History", historyModel);
+
+export default History;
