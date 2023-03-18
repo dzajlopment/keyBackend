@@ -27,3 +27,7 @@ keyModel.set("toJSON", {
 	virtuals: true,
 	versionKey: false,
 });
+
+const Key = mongoose.model("Key", keyModel);
+
+export default Key;
