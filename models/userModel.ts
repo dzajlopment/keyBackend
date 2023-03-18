@@ -21,6 +21,15 @@ const userModel = new mongoose.Schema({
 	],
 });
 
+userModel.virtual("id").get(function () {
+	return this._id.toHexString();
+});
+
+userModel.set("toJSON", {
+	virtuals: true,
+	versionKey: false,
+});
+
 const User = mongoose.model("User", userModel);
 
 export default User;
