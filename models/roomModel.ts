@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
 
-const roomModel = new mongoose.Schema({
-	number: {
-		type: Number,
+const roomModel = new mongoose.Schema(
+	{
+		number: {
+			type: String,
+		},
 		key: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Key",
 		},
 	},
-});
+	{
+		versionKey: false,
+	}
+);
 
 roomModel.virtual("id").get(function () {
 	return this._id.toHexString();

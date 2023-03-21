@@ -1,25 +1,30 @@
 import mongoose from "mongoose";
 
-const historyModel = new mongoose.Schema({
-	startTime: {
-		type: Date,
-		default: Date.now(),
+const historyModel = new mongoose.Schema(
+	{
+		startTime: {
+			type: Date,
+			default: Date.now(),
+		},
+		endTime: {
+			type: Date,
+			default: null,
+		},
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "user",
+			required: true,
+		},
+		key: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "key",
+			required: true,
+		},
 	},
-	endTime: {
-		type: Date,
-		default: null,
-	},
-	user: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "user",
-		required: true,
-	},
-	key: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "key",
-		required: true,
-	},
-});
+	{
+		versionKey: false,
+	}
+);
 
 historyModel.virtual("id").get(function () {
 	return this._id.toHexString();

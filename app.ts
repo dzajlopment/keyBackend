@@ -8,6 +8,10 @@ import compression from "compression";
 import AppError from "./utils/AppError";
 import globalErrorHandler from "./controllers/errorController";
 import { Response, Request, NextFunction, json } from "express";
+import User from "./models/userModel";
+import Key from "./models/keyModel";
+import Room from "./models/roomModel";
+import History from "./models/historyModel";
 
 const app = express();
 

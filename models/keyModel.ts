@@ -1,17 +1,22 @@
 import mongoose from "mongoose";
 
-const keyModel = new mongoose.Schema({
-	currentOwner: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "User",
-		default: null,
-	},
-	cardIds: [
-		{
-			type: Number,
+const keyModel = new mongoose.Schema(
+	{
+		currentOwner: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User",
+			default: null,
 		},
-	],
-});
+		cardIds: [
+			{
+				type: Number,
+			},
+		],
+	},
+	{
+		versionKey: false,
+	}
+);
 
 keyModel.virtual("room", {
 	ref: "Room",
