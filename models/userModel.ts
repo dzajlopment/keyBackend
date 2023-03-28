@@ -1,40 +1,44 @@
-import mongoose from "mongoose";
+import { Schema, model, Document } from "mongoose";
 
-const userModel = new mongoose.Schema(
-	{
-		name: {
-			type: String,
-			trim: true,
-			required: [true, "Please tell us your name"],
-		},
-		surname: {
-			type: String,
-			trim: true,
-			required: [true, "Please tell us your surname"],
-		},
-		number: {
-			type: Number,
-		},
-		cardIds: [
-			{
-				type: Number,
-			},
-		],
+export type User = {
+	id: string;
+	name: string;
+	surname: string;
+	number: number;
+	cardIds: number[];
+};
+
+export interface UserDocument extends User, Document {
+	id: string;
+}
+
+const userSchema = new Schema<UserDocument>({
+	name: {
+		type: String,
+		trim: true,
+		required: [true, "Please tell us your name"],
 	},
-	{
-		versionKey: false,
-	}
-);
-
-userModel.virtual("id").get(function () {
-	return this._id.toHexString();
+	surname: {
+		type: String,
+		trim: true,
+		required: [true, "Please tell us your surname"],
+	},
+	number: {
+		type: Number,
+		required: true,
+	},
+	cardIds: {
+		type: [Number],
+		required: true,
+	},
 });
 
-userModel.set("toJSON", {
-	virtuals: true,
-	versionKey: false,
+userSchema.set("toJSON", {
+	transform: function (doc, ret) {
+		ret.id = ret._id;
+		delete ret._id;
+		delete ret.__v;
+	},
 });
 
-const User = mongoose.model("User", userModel);
-
-export default User;
+export const UserModel = model<UserDocument>("User", userSchema);

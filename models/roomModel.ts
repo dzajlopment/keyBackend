@@ -7,13 +7,21 @@ const roomModel = new mongoose.Schema(
 		},
 		key: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Key",
+			ref: "keys",
 		},
 	},
 	{
 		versionKey: false,
 	}
 );
+
+roomModel.pre(/^find/, function (next) {
+	this.populate({
+		path: "keys",
+		select: "currentOwner cardIds",
+	});
+	next();
+});
 
 roomModel.virtual("id").get(function () {
 	return this._id.toHexString();
@@ -22,14 +30,6 @@ roomModel.virtual("id").get(function () {
 roomModel.set("toJSON", {
 	virtuals: true,
 	versionKey: false,
-});
-
-roomModel.pre(/^find/, function (next) {
-	this.populate({
-		path: "key",
-	});
-
-	next();
 });
 
 const Room = mongoose.model("Room", roomModel);

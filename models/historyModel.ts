@@ -37,13 +37,15 @@ historyModel.set("toJSON", {
 
 historyModel.pre(/^find/, function (next) {
 	this.populate({
-		path: "user",
+		path: "users",
 		select: "name surname number",
+		strictPopulate: false,
 	});
 
 	this.populate({
-		path: "key",
+		path: "keys",
 		select: "room",
+		strictPopulate: false,
 	});
 
 	next();

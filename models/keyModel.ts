@@ -33,6 +33,6 @@ keyModel.set("toJSON", {
 	versionKey: false,
 });
 
-const Key = mongoose.model("Key", keyModel);
+const Key = mongoose.model("Key", keyModel, "keys");
 
 export default Key;
