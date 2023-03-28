@@ -8,4 +8,6 @@ export default async () => {
 	await KeyModel.deleteMany({});
 	await UserModel.deleteMany({});
 	await RentHistoryModel.deleteMany({});
+
+	console.log("All data deleted!");
 };

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { seedRentHistory, seedRooms, seedUsers } from "./seedData";
+import deleteData from "./deleteData";
 
 dotenv.config();
 const DB = process.env.DATABASE?.replace(
@@ -29,7 +30,5 @@ if (process.argv[2] === "--import") {
 		}
 	}
 } else if (process.argv[2] === "--delete") {
-	console.log("Delete");
+	deleteData();
 }
-
-console.log(process.argv);
