@@ -63,10 +63,7 @@ export async function seedRooms() {
 		}
 		const insertedKeys = await KeyModel.insertMany(keys);
 		const keyIDs = insertedKeys.map((key) => key.id);
-		console.log(keyIDs);
-		await RoomModel.updateOne({ _id: room._id }, { $set: { keyIDs } }).then(
-			(data) => console.log(data)
-		);
+		await RoomModel.updateOne({ _id: room._id }, { $set: { keyIDs } });
 	}
 
 	console.log("Rooms seeded successfully");
@@ -91,18 +88,16 @@ export async function seedRentHistory() {
 			{ _id: key._id },
 			{
 				$set: {
-					currentOwner: {
-						id: user._id,
-						name: user.name,
-						surname: user.surname,
-					},
+					currentOwner: user._id,
 				},
 			}
 		);
 	}
 
 	// Insert the rent history into the database
-	await RentHistoryModel.insertMany(rentHistories);
+	await RentHistoryModel.insertMany(rentHistories).then((data) => {
+		console.log(data);
+	});
 
 	console.log("Rent history seeded successfully");
 }

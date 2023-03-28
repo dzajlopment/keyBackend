@@ -4,11 +4,7 @@ import { UserDocument } from "./userModel";
 export interface Key {
 	id?: string;
 	cardIds: number[];
-	currentOwner: null | {
-		id: UserDocument["_id"];
-		name: string;
-		surname: string;
-	};
+	currentOwner: null | UserDocument["_id"];
 }
 
 export interface KeyDocument extends Key, Document {
@@ -21,13 +17,9 @@ const keySchema = new Schema<KeyDocument>({
 		required: true,
 	},
 	currentOwner: {
-		id: {
-			type: Schema.Types.ObjectId,
-			ref: "User",
-			default: null,
-		},
-		name: String,
-		surname: String,
+		type: Schema.Types.ObjectId,
+		ref: "User",
+		default: null,
 	},
 });
 
