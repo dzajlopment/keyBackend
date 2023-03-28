@@ -14,8 +14,9 @@ mongoose.connect(DB!).then(() => console.log("DB connection successful!"));
 if (process.argv[2] === "--import") {
 	if (!process.argv[3]) {
 		seedUsers();
-		seedRooms();
-		seedRentHistory();
+		seedRooms().then(() => {
+			seedRentHistory();
+		});
 	} else {
 		if (process.argv[3] === "users") {
 			seedUsers();
