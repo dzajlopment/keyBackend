@@ -12,20 +12,20 @@ mongoose.connect(DB!).then(() => console.log("DB connection successful!"));
 
 if (process.argv[2] === "--import") {
 	if (!process.argv[3]) {
-		await seedUsers();
-		await seedRooms();
-		await seedRentHistory();
+		seedUsers();
+		seedRooms();
+		seedRentHistory();
 	} else {
 		if (process.argv[3] === "users") {
-			await seedUsers();
+			seedUsers();
 		}
 
 		if (process.argv[3] === "rooms") {
-			await seedRooms();
+			seedRooms();
 		}
 
 		if (process.argv[3] === "history") {
-			await seedRentHistory();
+			seedRentHistory();
 		}
 	}
 } else if (process.argv[2] === "--delete") {

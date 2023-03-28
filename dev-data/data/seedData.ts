@@ -58,12 +58,15 @@ export async function seedRooms() {
 					faker.datatype.number(),
 				],
 				currentOwner: null,
-				roomId: room.id,
+				roomId: room._id,
 			});
 		}
 		const insertedKeys = await KeyModel.insertMany(keys);
-		const keyIds = insertedKeys.map((key) => key.id);
-		await RoomModel.updateOne({ _id: room.id }, { $set: { keyIds } });
+		const keyIDs = insertedKeys.map((key) => key.id);
+		console.log(keyIDs);
+		await RoomModel.updateOne({ _id: room._id }, { $set: { keyIDs } }).then(
+			(data) => console.log(data)
+		);
 	}
 
 	console.log("Rooms seeded successfully");
@@ -81,14 +84,18 @@ export async function seedRentHistory() {
 		rentHistories.push({
 			startTime: faker.date.past(),
 			endTime: new Date(),
-			userId: user.id,
-			keyId: key.id,
+			userId: user._id,
+			keyId: key._id,
 		});
 		await KeyModel.updateOne(
-			{ _id: key.id },
+			{ _id: key._id },
 			{
 				$set: {
-					currentOwner: { id: user.id, name: user.name, surname: user.surname },
+					currentOwner: {
+						id: user._id,
+						name: user.name,
+						surname: user.surname,
+					},
 				},
 			}
 		);
