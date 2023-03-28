@@ -3,7 +3,7 @@ import { KeyDocument } from "./keyModel";
 
 export interface Room {
 	id: string;
-	number: number;
+	number: string;
 	keyIDs: KeyDocument["_id"][];
 }
 
@@ -13,7 +13,7 @@ export interface RoomDocument extends Room, Document {
 
 const roomSchema = new Schema<RoomDocument>({
 	number: {
-		type: Number,
+		type: String,
 	},
 	keyIDs: [
 		{
