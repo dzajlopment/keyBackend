@@ -2,7 +2,7 @@ import { Schema, model, Document } from "mongoose";
 import { UserDocument } from "./userModel";
 
 export interface Key {
-	id: string;
+	id?: string;
 	cardIds: number[];
 	currentOwner: null | {
 		id: UserDocument["_id"];

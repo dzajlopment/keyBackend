@@ -2,7 +2,7 @@ import { Schema, model, Document } from "mongoose";
 import { KeyDocument } from "./keyModel";
 
 export interface Room {
-	id: string;
+	id?: string;
 	number: string;
 	keyIDs: KeyDocument["_id"][];
 }

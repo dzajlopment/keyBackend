@@ -1,7 +1,7 @@
 import { Schema, model, Document } from "mongoose";
 
 export type User = {
-	id: string;
+	id?: string;
 	name: string;
 	surname: string;
 	number: number;

@@ -3,15 +3,15 @@ import { UserDocument } from "./userModel";
 import { KeyDocument } from "./keyModel";
 
 export interface RentHistory {
-	id: string;
+	id?: string;
 	startTime: Date;
 	endTime: Date | null;
-	user: {
+	user?: {
 		id: UserDocument["_id"];
 		name: string;
 		surname: string;
 	};
-	key: KeyDocument["_id"];
+	key?: KeyDocument["_id"];
 }
 
 export interface RentHistoryDocument extends RentHistory, Document {
