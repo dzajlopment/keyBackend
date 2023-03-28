@@ -5,7 +5,7 @@ import { RentHistory, RentHistoryModel } from "../../models/rentHistoryModel";
 import { faker } from "@faker-js/faker";
 
 type ModifiedKey = Key & { roomId: string };
-type ModifyRent = RentHistory & { userId: string; keyId: string };
+
 export async function seedUsers() {
 	// Generate 10 random users
 	const users: User[] = [];
@@ -75,14 +75,14 @@ export async function seedRentHistory() {
 	const keys = await KeyModel.find({});
 
 	// Generate rent history for each key
-	const rentHistories: ModifyRent[] = [];
+	const rentHistories: RentHistory[] = [];
 	for (const key of keys) {
 		const user = users[Math.floor(Math.random() * users.length)];
 		rentHistories.push({
 			startTime: faker.date.past(),
 			endTime: new Date(),
-			userId: user._id,
-			keyId: key._id,
+			user: user._id,
+			key: key._id,
 		});
 		await KeyModel.updateOne(
 			{ _id: key._id },
@@ -95,9 +95,7 @@ export async function seedRentHistory() {
 	}
 
 	// Insert the rent history into the database
-	await RentHistoryModel.insertMany(rentHistories).then((data) => {
-		console.log(data);
-	});
+	await RentHistoryModel.insertMany(rentHistories);
 
 	console.log("Rent history seeded successfully");
 }
