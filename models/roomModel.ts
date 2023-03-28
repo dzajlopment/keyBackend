@@ -1,37 +1,34 @@
-import mongoose from "mongoose";
+import { Schema, model, Document } from "mongoose";
+import { KeyDocument } from "./keyModel";
 
-const roomModel = new mongoose.Schema(
-	{
-		number: {
-			type: String,
-		},
-		key: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "keys",
-		},
+export interface Room {
+	id: string;
+	number: number;
+	keyIDs: KeyDocument["_id"][];
+}
+
+export interface RoomDocument extends Room, Document {
+	id: string;
+}
+
+const roomSchema = new Schema<RoomDocument>({
+	number: {
+		type: Number,
 	},
-	{
-		versionKey: false,
-	}
-);
-
-roomModel.pre(/^find/, function (next) {
-	this.populate({
-		path: "keys",
-		select: "currentOwner cardIds",
-	});
-	next();
+	keyIDs: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Key",
+		},
+	],
 });
 
-roomModel.virtual("id").get(function () {
-	return this._id.toHexString();
+roomSchema.set("toJSON", {
+	transform: function (doc, ret) {
+		ret.id = ret._id;
+		delete ret._id;
+		delete ret.__v;
+	},
 });
 
-roomModel.set("toJSON", {
-	virtuals: true,
-	versionKey: false,
-});
-
-const Room = mongoose.model("Room", roomModel);
-
-export default Room;
+export const RoomModel = model<RoomDocument>("Room", roomSchema);
