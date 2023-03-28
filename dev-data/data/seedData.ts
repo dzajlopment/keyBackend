@@ -1,6 +1,6 @@
 import { Room, RoomModel } from "../../models/roomModel";
 import { Key, KeyModel } from "../../models/keyModel";
-import { User, UserDocument, UserModel } from "../../models/userModel";
+import { User, UserModel } from "../../models/userModel";
 import { RentHistory, RentHistoryModel } from "../../models/rentHistoryModel";
 import { faker } from "@faker-js/faker";
 
