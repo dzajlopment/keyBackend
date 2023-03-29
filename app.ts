@@ -8,10 +8,7 @@ import compression from "compression";
 import AppError from "./utils/AppError";
 import globalErrorHandler from "./controllers/errorController";
 import { Response, Request, NextFunction, json } from "express";
-import { UserModel, UserDocument } from "./models/userModel";
-import { RoomModel } from "./models/roomModel";
-import { RentHistoryModel } from "./models/rentHistoryModel";
-import mongoose from "mongoose";
+import userRoute from "./routes/userRouter";
 
 const app = express();
 
@@ -34,22 +31,21 @@ const limiter = rateLimit({
 
 app.use("/api", limiter);
 
+app.use(json());
+
 app.use(mongoSanitize());
 
 app.use(compression());
 
-app.use(json());
-
 // ROUTES
 // default route path: '/api/v1/{route}'
 
-app.use("/", (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({
-		data: "Working",
-	});
-
+app.use((req, res, next) => {
+	(req as any).requestTime = new Date().toISOString();
 	next();
 });
+
+app.use("/api/v1/users", userRoute);
 
 app.all("*", async (req, res, next) => {
 	new AppError(`Can't find ${req.originalUrl} on this server!`, 404);
