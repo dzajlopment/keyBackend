@@ -8,8 +8,10 @@ import compression from "compression";
 import AppError from "./utils/AppError";
 import globalErrorHandler from "./controllers/errorController";
 import { Response, Request, NextFunction, json } from "express";
-import { UserModel } from "./models/userModel";
+import { UserModel, UserDocument } from "./models/userModel";
 import { RoomModel } from "./models/roomModel";
+import { RentHistoryModel } from "./models/rentHistoryModel";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -48,7 +50,7 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
 	next();
 });
 
-app.all("*", (req, res, next) => {
+app.all("*", async (req, res, next) => {
 	new AppError(`Can't find ${req.originalUrl} on this server!`, 404);
 });
 

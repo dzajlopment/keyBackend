@@ -12,26 +12,31 @@ export interface UserDocument extends User, Document {
 	id: string;
 }
 
-const userSchema = new Schema<UserDocument>({
-	name: {
-		type: String,
-		trim: true,
-		required: [true, "Please tell us your name"],
+const userSchema = new Schema<UserDocument>(
+	{
+		name: {
+			type: String,
+			trim: true,
+			required: [true, "Please tell us your name"],
+		},
+		surname: {
+			type: String,
+			trim: true,
+			required: [true, "Please tell us your surname"],
+		},
+		number: {
+			type: Number,
+			required: true,
+		},
+		cardIds: {
+			type: [Number],
+			required: true,
+		},
 	},
-	surname: {
-		type: String,
-		trim: true,
-		required: [true, "Please tell us your surname"],
-	},
-	number: {
-		type: Number,
-		required: true,
-	},
-	cardIds: {
-		type: [Number],
-		required: true,
-	},
-});
+	{
+		versionKey: false,
+	}
+);
 
 userSchema.set("toJSON", {
 	transform: function (doc, ret) {
@@ -41,4 +46,7 @@ userSchema.set("toJSON", {
 	},
 });
 
-export const UserModel = model<UserDocument>("User", userSchema);
+// Register the User model with Mongoose
+const UserModel = model<UserDocument>("User", userSchema);
+
+export { UserModel };

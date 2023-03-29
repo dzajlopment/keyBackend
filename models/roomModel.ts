@@ -11,17 +11,22 @@ export interface RoomDocument extends Room, Document {
 	id: string;
 }
 
-const roomSchema = new Schema<RoomDocument>({
-	number: {
-		type: String,
-	},
-	keyIDs: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: "Key",
+const roomSchema = new Schema<RoomDocument>(
+	{
+		number: {
+			type: String,
 		},
-	],
-});
+		keyIDs: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Key",
+			},
+		],
+	},
+	{
+		versionKey: false,
+	}
+);
 
 roomSchema.set("toJSON", {
 	transform: function (doc, ret) {

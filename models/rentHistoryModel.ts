@@ -1,5 +1,5 @@
 import { Schema, model, Document } from "mongoose";
-import { UserDocument } from "./userModel";
+import { UserDocument, UserModel } from "./userModel";
 import { KeyDocument } from "./keyModel";
 
 export interface RentHistory {
@@ -14,26 +14,31 @@ export interface RentHistoryDocument extends RentHistory, Document {
 	id: string;
 }
 
-const rentHistorySchema = new Schema<RentHistoryDocument>({
-	startTime: {
-		type: Date,
-		default: Date.now,
+const rentHistorySchema = new Schema<RentHistoryDocument>(
+	{
+		startTime: {
+			type: Date,
+			default: Date.now,
+		},
+		endTime: {
+			type: Date,
+			default: null,
+		},
+		user: {
+			type: Schema.Types.ObjectId,
+			ref: "users",
+			required: true,
+		},
+		key: {
+			type: Schema.Types.ObjectId,
+			ref: "Key",
+			required: true,
+		},
 	},
-	endTime: {
-		type: Date,
-		default: null,
-	},
-	user: {
-		type: Schema.Types.ObjectId,
-		ref: "User",
-		required: true,
-	},
-	key: {
-		type: Schema.Types.ObjectId,
-		ref: "Key",
-		required: true,
-	},
-});
+	{
+		versionKey: false,
+	}
+);
 
 rentHistorySchema.set("toJSON", {
 	transform: function (doc, ret) {
@@ -44,7 +49,7 @@ rentHistorySchema.set("toJSON", {
 });
 
 rentHistorySchema.virtual("userDetails", {
-	ref: "User",
+	ref: "users",
 	localField: "user",
 	foreignField: "_id",
 	justOne: true,

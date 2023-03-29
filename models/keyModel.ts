@@ -11,17 +11,22 @@ export interface KeyDocument extends Key, Document {
 	id: string;
 }
 
-const keySchema = new Schema<KeyDocument>({
-	cardIds: {
-		type: [Number],
-		required: true,
+const keySchema = new Schema<KeyDocument>(
+	{
+		cardIds: {
+			type: [Number],
+			required: true,
+		},
+		currentOwner: {
+			type: Schema.Types.ObjectId,
+			ref: "User",
+			default: null,
+		},
 	},
-	currentOwner: {
-		type: Schema.Types.ObjectId,
-		ref: "User",
-		default: null,
-	},
-});
+	{
+		versionKey: false,
+	}
+);
 
 keySchema.virtual("room", {
 	ref: "Room",
