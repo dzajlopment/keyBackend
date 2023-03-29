@@ -105,9 +105,15 @@ const patchOne = (Model: Model<any>) =>
 
 const createOne = (Model: Model<any>) =>
 	catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+		const model = new Model({
+			...req.body,
+		});
+
+		const response = await model.save();
+
 		res.status(201).json({
 			status: "success",
-			data: { ...req.body },
+			data: response,
 		});
 	});
 
