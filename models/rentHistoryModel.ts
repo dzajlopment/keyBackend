@@ -26,7 +26,7 @@ const rentHistorySchema = new Schema<RentHistoryDocument>(
 		},
 		user: {
 			type: Schema.Types.ObjectId,
-			ref: "users",
+			ref: "User",
 			required: true,
 		},
 		key: {
@@ -48,19 +48,32 @@ rentHistorySchema.set("toJSON", {
 	},
 });
 
-rentHistorySchema.virtual("userDetails", {
-	ref: "users",
-	localField: "user",
-	foreignField: "_id",
-	justOne: true,
-	options: { select: "name surname" },
-});
+// rentHistorySchema.virtual("userDetails", {
+// 	ref: "users",
+// 	localField: "user",
+// 	foreignField: "_id",
+// 	justOne: true,
+// 	options: { select: "name surname" },
+// });
 
-rentHistorySchema.virtual("keyDetails", {
-	ref: "Key",
-	localField: "key",
-	foreignField: "_id",
-	justOne: true,
+// rentHistorySchema.virtual("keyDetails", {
+// 	ref: "Key",
+// 	localField: "key",
+// 	foreignField: "_id",
+// 	justOne: true,
+// });
+
+rentHistorySchema.pre(/^find/, function (next) {
+	this.populate({
+		path: "user",
+		select: "-__v",
+	});
+
+	this.populate({
+		path: "key",
+		select: "-__v",
+	});
+	next();
 });
 
 rentHistorySchema.set("toObject", { virtuals: true });

@@ -47,6 +47,7 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
 	res.status(200).json({
 		data: "Working",
 	});
+
 	next();
 });
 
