@@ -1,5 +1,7 @@
 import express from "express";
 import userController from "../controllers/userController";
+import rentHistoryController from "../controllers/rentHistoryController";
+import roomsController from "../controllers/roomsController";
 
 const router = express.Router();
 router
