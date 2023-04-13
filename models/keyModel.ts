@@ -28,12 +28,22 @@ const keySchema = new Schema<KeyDocument>(
 	}
 );
 
-keySchema.virtual("room", {
-	ref: "Room",
-	localField: "_id",
-	foreignField: "keyIDs",
-	justOne: true,
+// keySchema.virtual("room", {
+// 	ref: "Room",
+// 	localField: "_id",
+// 	foreignField: "keyIDs",
+// 	justOne: true,
+// });
+
+keySchema.pre(/^find/, function (next) {
+	this.populate({
+		path: "currentOwner",
+		select: "-__v",
+	});
+
+	next();
 });
+
 
 keySchema.set("toJSON", {
 	transform: function (doc, ret) {

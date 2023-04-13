@@ -71,7 +71,7 @@ rentHistorySchema.pre(/^find/, function (next) {
 
 	this.populate({
 		path: "key",
-		select: "-__v",
+		select: "-__v -currentOwner",
 	});
 	next();
 });
