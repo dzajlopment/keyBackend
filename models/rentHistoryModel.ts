@@ -48,21 +48,6 @@ rentHistorySchema.set("toJSON", {
 	},
 });
 
-// rentHistorySchema.virtual("userDetails", {
-// 	ref: "users",
-// 	localField: "user",
-// 	foreignField: "_id",
-// 	justOne: true,
-// 	options: { select: "name surname" },
-// });
-
-// rentHistorySchema.virtual("keyDetails", {
-// 	ref: "Key",
-// 	localField: "key",
-// 	foreignField: "_id",
-// 	justOne: true,
-// });
-
 rentHistorySchema.pre(/^find/, function (next) {
 	this.populate({
 		path: "user",
